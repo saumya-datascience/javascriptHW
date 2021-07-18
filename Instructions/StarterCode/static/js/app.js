@@ -15,8 +15,8 @@ function init() {
             nameSel.append("option").text(nam).property("value", nam);
         })
         buildMetadata(arr[0])
-        // Update charts with newly selected sample
         buildCharts(arr[0])
+
 
 
     });
@@ -35,7 +35,7 @@ function init() {
 function buildMetadata(sample) {
     console.log(sample)
     //panelsel = d3.select(".panel panel-primary")
-    panelsel=d3.select("#sample-metadata")
+    panelsel = d3.select("#sample-metadata")
     // Read the json data
     d3.json("samples.json").then(function (response) {
         metadata = response.metadata
@@ -51,7 +51,12 @@ function buildMetadata(sample) {
             // append the information to the demographics panel
             // using the variables key and value
         })
+    //washing frequency guage chart
+        listFreq=sam_data.map(object => object.wfreq)
+        console.log(listFreq)
+
     });
+
 
 
     // Parse and filter the data to get the sample's metadata
@@ -65,28 +70,71 @@ function buildCharts(sample) {
     //console.log(sample)
     // Read the json data
     d3.json("samples.json").then(function (response) {
-        samplesWhole=response.samples
-        let subset = samplesWhole.filter(sam => sam.id== sample)
+        samplesWhole = response.samples
+        let subset = samplesWhole.filter(sam => sam.id == sample)
         console.log(subset)
-        sampleId=[]
-        sampleValues=[]
-        sam_data = Object.entries(subset)
-        console.log(sam_data)
-        for(i=1;i<10;i++){
-            sampleId=sam_data.map(s => s.otu_ids)
-            sampleValues=sam_data.map(s => s.sample_values)
+        result = subset[0]
+        var ids = result.otu_ids;
+        var labels = result.otu_labels;
+        var sample_values = result.sample_values;
+        console.log(ids)
+        console.log(sample_values)
 
+        var id = ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse();
+        console.log(id)
+        var samValue = sample_values.slice(0, 10).map(val => val).reverse();
+        console.log(samValue)
+        var labels = labels.slice(0, 10).map(lab => lab).reverse();
+        console.log(labels)
+
+        //bar chart
+        // Trace1 for the Greek Data
+        let trace1 = {
+            x: samValue,
+            y: id,
+            name: "Greek",
+            type: "bar",
+            orientation: "h"
+        };
+        let traceData = [trace1];
+        // Apply a title to the layout
+        let layout = {
+            title: "Greek gods search results",
+            margin: {
+                l: 100,
+                r: 100,
+                t: 100,
+                b: 100
+            }
 
         }
-        console.log(sampleId)
-        console.log(sampleValues)
 
-        // sample_id=sam_data.map(s => s.)
-        // sam_data.forEach((key,value)=>{
-        //     sample_id.push(key==="otu_")
-        //     sample_values=
+        // Render the plot to the div tag with id "plot"
+        // Note that we use `traceData` here, not `data`
+        Plotly.newPlot("bar", traceData, layout);
 
-        // })
+        //BUBBLE CHARTS
+        var allId = ids.map(otuID => otuID);
+        console.log(allId)
+        var allValue = sample_values.map(val => val);
+        console.log(allValue)
+        var allLabels = labels.map(lab => lab);
+        console.log(allLabels)
+
+        trace = {
+            x: allId,
+            y: allValue,
+            marker: {
+                color: allId,
+                size: allValue},
+                mode: 'markers'
+            };
+            Plotly.plot('bubble', [trace]);
+
+        
+
+
+
 
     });
 
