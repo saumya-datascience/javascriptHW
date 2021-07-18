@@ -34,7 +34,8 @@ function init() {
 // Define a function that will create metadata for given sample
 function buildMetadata(sample) {
     console.log(sample)
-    panelsel = d3.select(".panel panel-primary")
+    //panelsel = d3.select(".panel panel-primary")
+    panelsel=d3.select("#sample-metadata")
     // Read the json data
     d3.json("samples.json").then(function (response) {
         metadata = response.metadata
@@ -42,16 +43,11 @@ function buildMetadata(sample) {
         //console.log(list_metadata)
         let sample_demo = metadata.filter(sam => sam.id == sample)
         sample_subset = sample_demo[0]
-        //sample_metadata=Object.entries(sample_subset)
-        //console.log(sample_metadata)
-        //(metadata is the parsed object)
-        // Specify the location of the metadata and update it
-
         sam_data = Object.entries(sample_subset)
         sam_data.forEach(([key, value]) => {
-            console.log([key,value])
-            panelsel.append("#sample-metadata").text(key)
-            console.log(panelsel)
+            //console.log([key,value])
+            panelsel.append("p").text(`${key} : ${value}`)
+            //console.log(panelsel)
             // append the information to the demographics panel
             // using the variables key and value
         })
@@ -69,7 +65,29 @@ function buildCharts(sample) {
     //console.log(sample)
     // Read the json data
     d3.json("samples.json").then(function (response) {
-        console.log(response.samples.id)
+        samplesWhole=response.samples
+        let subset = samplesWhole.filter(sam => sam.id== sample)
+        console.log(subset)
+        sampleId=[]
+        sampleValues=[]
+        sam_data = Object.entries(subset)
+        console.log(sam_data)
+        for(i=1;i<10;i++){
+            sampleId=sam_data.map(s => s.otu_ids)
+            sampleValues=sam_data.map(s => s.sample_values)
+
+
+        }
+        console.log(sampleId)
+        console.log(sampleValues)
+
+        // sample_id=sam_data.map(s => s.)
+        // sam_data.forEach((key,value)=>{
+        //     sample_id.push(key==="otu_")
+        //     sample_values=
+
+        // })
+
     });
 
 
