@@ -15,7 +15,7 @@ The dataset reveals that a small handful of microbial species (also called opera
   * Used `otu_ids` as the labels for the bar chart.
   * Used `otu_labels` as the hovertext for the chart.
 
-  ![bar Chart](Images/hw01.png)
+  ![bar Chart](https://github.com/saumya-datascience/javascriptHW/blob/main/Instructions/Images/newplot.png)
 
 3. Created a bubble chart that displays each sample.
 
@@ -29,7 +29,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 * Used `otu_labels` for the text values.
 
-![Bubble Chart](Images/bubble_chart.png)
+![Bubble Chart](https://github.com/saumya-datascience/javascriptHW/blob/main/Instructions/Images/newplot%20(2).png)
 
 4. Displayed sample metadata, i.e., an individual's demographic information.
 
@@ -48,7 +48,7 @@ The following task is advanced and therefore optional.
 
 
 
-![Weekly Washing Frequency Gauge](Images/gauge.png)
+![Weekly Washing Frequency Gauge](https://github.com/saumya-datascience/javascriptHW/blob/main/Instructions/Images/newplot%20(1).png)
 
 ## Deployment
 
