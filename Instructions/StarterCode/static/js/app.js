@@ -44,38 +44,39 @@ function buildMetadata(sample) {
         sample_subset = sample_demo[0]
         sam_data = Object.entries(sample_subset)
         sam_data.forEach(([key, value]) => {
-        
+
             panelsel.append("p").text(`${key} : ${value}`)
 
         })
-    //washing frequency guage chart
-        listFreq=sample_subset.wfreq
+        //washing frequency guage chart
+        listFreq = sample_subset.wfreq
         console.log(listFreq)
+
         var data = [
             {
-              domain: { x: [0, 1], y: [0, 1] },
-              value: listFreq,
-              title: { text: "Belly Button Washing Frequency" },
-              type: "indicator",
-              mode: "gauge+number+delta",
-              delta: { reference: 380 },
-              gauge: {
-                axis: { range: [null, 9] },
-                steps: [
-                  { range: [0, 4], color: "lightgray" },
-                  { range: [4, 9], color: "gray" }
-                ],
-                threshold: {
-                  line: { color: "red", width: 4 },
-                  thickness: 0.75,
-                  value: 490
+                domain: { x: [0, 1], y: [0, 1] },
+                value: listFreq,
+                title: { text: "Belly Button Washing Frequency" },
+                type: "indicator",
+                mode: "gauge+number+delta",
+                delta: { reference: 380 },
+                gauge: {
+                    axis: { range: [null, 9] },
+                    steps: [
+                        { range: [0, 4], color: "lightgray" },
+                        { range: [4, 9], color: "gray" }
+                    ],
+                    threshold: {
+                        line: { color: "red", width: 4 },
+                        thickness: 0.75,
+                        value: 490
+                    }
                 }
-              }
             }
-          ];
-          
-          var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
-          Plotly.newPlot('gauge', data, layout);
+        ];
+
+        var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+        Plotly.newPlot('gauge', data, layout);
 
     });
 
@@ -110,30 +111,30 @@ function buildCharts(sample) {
         console.log(labels)
 
         //bar chart
-        // Trace1 for the Greek Data
+        // Trace1 for the data
         let trace1 = {
             x: samValue,
             y: id,
-            name: "Greek",
+            text:labels,
             type: "bar",
             orientation: "h"
         };
         let traceData = [trace1];
         // Apply a title to the layout
-        let layout = {
-            title: "Greek gods search results",
-            margin: {
-                l: 100,
-                r: 100,
-                t: 100,
-                b: 100
-            }
+        // let layout = {
+        //     title: "Greek gods search results",
+        //     margin: {
+        //         l: 100,
+        //         r: 100,
+        //         t: 100,
+        //         b: 100
+        //     }
 
-        }
+        // }
 
         // Render the plot to the div tag with id "plot"
         // Note that we use `traceData` here, not `data`
-        Plotly.newPlot("bar", traceData, layout);
+        Plotly.newPlot("bar", traceData);
 
         //BUBBLE CHARTS
         var allId = ids.map(otuID => otuID);
@@ -146,19 +147,34 @@ function buildCharts(sample) {
         trace = {
             x: allId,
             y: allValue,
+            text: allLabels,
             marker: {
                 color: allId,
-                size: allValue},
-                mode: 'markers'
+                size: allValue
+            },
+            mode: 'markers'
+        };
+        data=[trace]
+        var c= {
+            xaxis: {
+                title: {
+                    text: 'OTU ID',
+                    font: {
+                        family: 'Courier New, monospace',
+                        size: 18,
+                        color: '#7f7f7f'
+                    }
+                }
+            }
             };
-            Plotly.plot('bubble', [trace]);
-
-        
+     Plotly.plot('bubble', data, c);
 
 
 
 
-    });
+
+
+        });
 
 
 
