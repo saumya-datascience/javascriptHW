@@ -39,21 +39,43 @@ function buildMetadata(sample) {
     // Read the json data
     d3.json("samples.json").then(function (response) {
         metadata = response.metadata
-        //list_metadata=Object.entries(metadata)
-        //console.log(list_metadata)
+
         let sample_demo = metadata.filter(sam => sam.id == sample)
         sample_subset = sample_demo[0]
         sam_data = Object.entries(sample_subset)
         sam_data.forEach(([key, value]) => {
-            //console.log([key,value])
+        
             panelsel.append("p").text(`${key} : ${value}`)
-            //console.log(panelsel)
-            // append the information to the demographics panel
-            // using the variables key and value
+
         })
     //washing frequency guage chart
-        listFreq=sam_data.map(object => object.wfreq)
+        listFreq=sample_subset.wfreq
         console.log(listFreq)
+        var data = [
+            {
+              domain: { x: [0, 1], y: [0, 1] },
+              value: listFreq,
+              title: { text: "Belly Button Washing Frequency" },
+              type: "indicator",
+              mode: "gauge+number+delta",
+              delta: { reference: 380 },
+              gauge: {
+                axis: { range: [null, 9] },
+                steps: [
+                  { range: [0, 4], color: "lightgray" },
+                  { range: [4, 9], color: "gray" }
+                ],
+                threshold: {
+                  line: { color: "red", width: 4 },
+                  thickness: 0.75,
+                  value: 490
+                }
+              }
+            }
+          ];
+          
+          var layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+          Plotly.newPlot('gauge', data, layout);
 
     });
 
@@ -150,13 +172,13 @@ function buildCharts(sample) {
 }
 
 
-function optionChanged(sample) {
+function optionChanged(newSample) {
     // The parameter being passed in this function is new sample id from dropdown menu
     //console.log(sample);
     // Update metadata with newly selected sample
-    buildMetadata(sample)
+    buildMetadata(newSample)
     // Update charts with newly selected sample
-    buildCharts(sample)
+    buildCharts(newSample)
 
 }
 
