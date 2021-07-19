@@ -34,6 +34,7 @@ function init() {
 // Define a function that will create metadata for given sample
 function buildMetadata(sample) {
     console.log(sample)
+    d3.select("#sample-metadata").html("");
     //panelsel = d3.select(".panel panel-primary")
     panelsel = d3.select("#sample-metadata")
     // Read the json data
@@ -120,17 +121,7 @@ function buildCharts(sample) {
             orientation: "h"
         };
         let traceData = [trace1];
-        // Apply a title to the layout
-        // let layout = {
-        //     title: "Greek gods search results",
-        //     margin: {
-        //         l: 100,
-        //         r: 100,
-        //         t: 100,
-        //         b: 100
-        //     }
-
-        // }
+       
 
         // Render the plot to the div tag with id "plot"
         // Note that we use `traceData` here, not `data`
@@ -167,7 +158,7 @@ function buildCharts(sample) {
                 }
             }
             };
-     Plotly.plot('bubble', data, c);
+     Plotly.newPlot('bubble', data, c);
 
 
 
